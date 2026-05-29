@@ -34,10 +34,26 @@
     "dino",
     "embed",
     "library",
-    "easter-egg"
+    "easter-egg",
+    "canvas",
+    "browser-game",
+    "zero-dependencies",
+    "typescript"
   ],
-  "author": "",
+  "author": "x1n-Q",
   "license": "MIT",
+  "homepage": "https://x1n-q.github.io/404game/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/x1n-Q/404game.git"
+  },
+  "bugs": {
+    "url": "https://github.com/x1n-Q/404game/issues"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=14"
+  },
   "devDependencies": {
     "typescript": "^5.6.0",
     "vite": "^5.4.0"
