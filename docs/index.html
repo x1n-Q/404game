@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>404game.js — Live Demo</title>
+    <meta name="description" content="Turn boring 404 pages into playable mini-games. Live demo of Snake, Flappy, Breakout, and Dino runner." />
+    <meta property="og:title" content="404game.js — Live Demo" />
+    <meta property="og:description" content="Drop-in JS library. Zero dependencies. < 30KB. Try all 4 games in your browser." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>" />
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: radial-gradient(ellipse at top, #1a1a3a 0%, #0a0a18 60%);
+        color: #f0f0ff;
+        font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+        min-height: 100vh;
+        padding: 32px 20px 60px;
+      }
+
+      header { text-align: center; max-width: 880px; margin: 0 auto 36px; }
+      h1 {
+        color: #00ffd5;
+        margin: 0 0 12px;
+        letter-spacing: 6px;
+        font-size: clamp(36px, 6vw, 64px);
+        text-shadow: 0 0 24px rgba(0, 255, 213, 0.45);
+      }
+      .tagline { color: #9aa; font-size: 17px; margin: 0 0 18px; line-height: 1.5; }
+      .badges {
+        display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+        margin: 18px 0 10px;
+      }
+      .badge {
+        background: #11112a; border: 1px solid #1f1f44; color: #00ffd5;
+        padding: 6px 12px; border-radius: 999px; font-size: 12px; text-decoration: none;
+        transition: all 0.2s;
+      }
+      .badge:hover { background: #1a1a3a; border-color: #00ffd5; transform: translateY(-1px); }
+      .badge.primary { background: #00ffd5; color: #0a0a18; font-weight: bold; }
+      .badge.primary:hover { background: #00d4b0; }
+
+      .install {
+        background: #08081a; border: 1px solid #1f1f44; border-radius: 8px;
+        padding: 12px 18px; margin: 18px auto 0; max-width: 520px;
+        color: #00ffd5; font-size: 14px; text-align: left;
+        overflow-x: auto; white-space: nowrap;
+      }
+      .install::before { content: '$ '; color: #555; }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 22px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .card {
+        background: #11112a;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid #1f1f44;
+        box-shadow: 0 6px 32px rgba(0, 255, 213, 0.06);
+        transition: all 0.25s;
+      }
+      .card:hover { transform: translateY(-3px); border-color: rgba(0, 255, 213, 0.3); box-shadow: 0 10px 40px rgba(0, 255, 213, 0.12); }
+      .card h2 {
+        margin: 0 0 14px; color: #00ffd5; font-size: 17px;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .theme-tag {
+        font-size: 11px; color: #888; background: #08081a;
+        padding: 3px 10px; border-radius: 999px; letter-spacing: 1px;
+      }
+      .game-mount { display: flex; justify-content: center; }
+
+      .footer {
+        text-align: center; margin: 50px auto 0; max-width: 720px;
+        color: #666; font-size: 13px; line-height: 1.7;
+      }
+      .footer a { color: #00ffd5; text-decoration: none; }
+      .footer a:hover { text-decoration: underline; }
+      .controls {
+        margin: 24px auto 0; max-width: 720px;
+        background: #08081a; border: 1px solid #1f1f44;
+        border-radius: 10px; padding: 16px 20px; font-size: 13px; color: #aab;
+      }
+      .controls strong { color: #00ffd5; }
+      .controls ul { margin: 8px 0 0; padding-left: 20px; }
+      .controls li { margin: 4px 0; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>404game.js</h1>
+      <p class="tagline">
+        Turn boring 404 pages into playable mini-games.<br />
+        Drop-in JS library &middot; zero dependencies &middot; &lt; 30KB
+      </p>
+      <div class="badges">
+        <a class="badge primary" href="https://github.com/x1n-Q/404game" target="_blank" rel="noopener">⭐ GitHub</a>
+        <a class="badge" href="https://github.com/x1n-Q/404game/releases/tag/v0.1.0" target="_blank" rel="noopener">v0.1.0</a>
+        <a class="badge" href="https://github.com/x1n-Q/404game#readme" target="_blank" rel="noopener">📖 Docs</a>
+        <a class="badge" href="https://github.com/x1n-Q/404game/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a>
+      </div>
+      <div class="install">npm install 404game</div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>🐍 Snake <span class="theme-tag">NEON</span></h2>
+        <div class="game-mount"><div id="snake"></div></div>
+      </div>
+      <div class="card">
+        <h2>🐦 Flappy <span class="theme-tag">RETRO</span></h2>
+        <div class="game-mount"><div id="flappy"></div></div>
+      </div>
+      <div class="card">
+        <h2>🧱 Breakout <span class="theme-tag">MINIMAL</span></h2>
+        <div class="game-mount"><div id="breakout"></div></div>
+      </div>
+      <div class="card">
+        <h2>🦖 Dino <span class="theme-tag">DARK</span></h2>
+        <div class="game-mount"><div id="dino"></div></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <strong>Controls:</strong>
+      <ul>
+        <li><strong>Snake</strong> — Arrow keys (desktop) / Swipe (mobile)</li>
+        <li><strong>Flappy</strong> — Space or Click (desktop) / Tap (mobile)</li>
+        <li><strong>Breakout</strong> — Arrow keys + Space (desktop) / Swipe + Tap (mobile)</li>
+        <li><strong>Dino</strong> — Space (desktop) / Tap (mobile)</li>
+      </ul>
+    </div>
+
+    <p class="footer">
+      Built with ❤️ by <a href="https://github.com/x1n-Q" target="_blank" rel="noopener">@x1n-Q</a> &middot;
+      <a href="https://github.com/x1n-Q/404game" target="_blank" rel="noopener">View source on GitHub</a><br />
+      Use it on your own 404 page in 3 lines of code.
+    </p>
+
+    <script src="./404game.umd.cjs"></script>
+    <script>
+      Game404.mount('#snake',    { game: 'snake',    theme: 'neon',    width: 320, height: 320 });
+      Game404.mount('#flappy',   { game: 'flappy',   theme: 'retro',   width: 320, height: 320 });
+      Game404.mount('#breakout', { game: 'breakout', theme: 'minimal', width: 320, height: 320 });
+      Game404.mount('#dino',     { game: 'dino',     theme: 'dark',    width: 320, height: 320 });
+    </script>
+  </body>
+</html>
