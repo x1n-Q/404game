@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>404game.js — Showcase</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin: 0; background: #0a0a18; color: #f0f0ff; font-family: system-ui, sans-serif; padding: 24px; }
+      h1 { color: #00ffd5; text-align: center; margin: 0 0 8px; letter-spacing: 4px; }
+      .sub { text-align: center; color: #888; margin-bottom: 24px; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+      .card { background: #11112a; padding: 16px; border-radius: 10px; box-shadow: 0 4px 24px rgba(0,255,213,0.08); }
+      .card h2 { margin: 0 0 12px; color: #00ffd5; font-size: 18px; }
+      .game-mount { display: flex; justify-content: center; }
+    </style>
+  </head>
+  <body>
+    <h1>404game.js</h1>
+    <p class="sub">All four games, all four themes — running simultaneously.</p>
+    <div class="grid">
+      <div class="card">
+        <h2>🐍 Snake (Neon)</h2>
+        <div class="game-mount"><div id="snake"></div></div>
+      </div>
+      <div class="card">
+        <h2>🐦 Flappy (Retro)</h2>
+        <div class="game-mount"><div id="flappy"></div></div>
+      </div>
+      <div class="card">
+        <h2>🧱 Breakout (Minimal)</h2>
+        <div class="game-mount"><div id="breakout"></div></div>
+      </div>
+      <div class="card">
+        <h2>🦖 Dino (Dark)</h2>
+        <div class="game-mount"><div id="dino"></div></div>
+      </div>
+    </div>
+
+    <script src="../dist/404game.umd.cjs"></script>
+    <script>
+      Game404.mount('#snake',    { game: 'snake',    theme: 'neon',    width: 320, height: 320 });
+      Game404.mount('#flappy',   { game: 'flappy',   theme: 'retro',   width: 320, height: 320 });
+      Game404.mount('#breakout', { game: 'breakout', theme: 'minimal', width: 320, height: 320 });
+      Game404.mount('#dino',     { game: 'dino',     theme: 'dark',    width: 320, height: 320 });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>404game.js — Dev Playground</title>
+    <style>
+      body { margin: 0; background: #0a0a18; color: #f0f0ff; font-family: system-ui, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; }
+      h1 { color: #00ffd5; }
+      .picker { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+      .picker button { background: #1a1a2e; color: #00ffd5; border: 1px solid #00ffd555; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-family: inherit; }
+      .picker button.active { background: #00ffd5; color: #0a0a18; }
+      #game { background: #0a0a18; border-radius: 8px; box-shadow: 0 0 32px #00ffd522; }
+      .note { font-size: 13px; color: #888; margin-top: 12px; max-width: 480px; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <h1>404game.js</h1>
+    <div class="picker" id="picker">
+      <button data-game="snake" class="active">🐍 Snake</button>
+      <button data-game="flappy">🐦 Flappy</button>
+      <button data-game="breakout">🧱 Breakout</button>
+      <button data-game="dino">🦖 Dino</button>
+      <button data-game="random">🎲 Random</button>
+    </div>
+    <div class="picker" id="themes">
+      <button data-theme="neon" class="active">Neon</button>
+      <button data-theme="retro">Retro</button>
+      <button data-theme="minimal">Minimal</button>
+      <button data-theme="dark">Dark</button>
+    </div>
+    <div id="game"></div>
+    <p class="note">Use ⬆️⬇️⬅️➡️ or swipe • Press SPACE or tap to act</p>
+
+    <script type="module">
+      import { mount } from '/src/index.ts';
+      let currentGame = 'snake';
+      let currentTheme = 'neon';
+      let instance = mount('#game', { game: currentGame, theme: currentTheme });
+
+      function rebuild() {
+        instance.destroy();
+        instance = mount('#game', { game: currentGame, theme: currentTheme });
+      }
+
+      document.querySelectorAll('#picker button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#picker button').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentGame = btn.dataset.game;
+          rebuild();
+        });
+      });
+      document.querySelectorAll('#themes button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#themes button').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentTheme = btn.dataset.theme;
+          // re-injection of styles only happens once; reload to apply theme fully
+          const styles = document.getElementById('g404-styles');
+          if (styles) styles.remove();
+          rebuild();
+        });
+      });
+    </script>
+  </body>
+</html>
